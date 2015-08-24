@@ -14,15 +14,15 @@ from manager import Manager
 
 
 class Server(ShowBase):
-    
+
     def __init__(self):
 
         args = str(sys.argv)
-        
+
         if "-window" in args:
             ShowBase.__init__(self)
         else:
-            ShowBase(windowType = 'none')
+            ShowBase.__init__(self, windowType = 'none')
 
         # Load Manager
         self.manager = Manager(self)
@@ -33,4 +33,4 @@ class Server(ShowBase):
 
 
 server = Server()
-base.run()
+server.run()
