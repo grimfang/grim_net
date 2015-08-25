@@ -22,12 +22,13 @@ class Config():
         if os.path.exists(prcFile):
             loadPrcFile(Filename.fromOsSpecific(prcFile))
         # set the variables using the config files content or set a default value
-        self.UDPPORT = ConfigVariableInt('udp-port', '6001').getValue()
+        self.UDPPORT = ConfigVariableInt('udp-port', '6002').getValue()
+        self.UDPPORTSERVER = ConfigVariableInt('udp-port-server', '6001').getValue()
         self.TIMEOUT = ConfigVariableInt('timeout-in-ms', '3000').getValue()
 
     def WritePRCFile(self):
         page = None
-        customConfigVariables = ["", "port", "timeout-in-ms"]
+        customConfigVariables = ["", "port", "server-port", "timeout-in-ms"]
         if os.path.exists(prcFile):
             # load the existing config file
             page = loadPrcFile(Filename.fromOsSpecific(prcFile))
@@ -48,6 +49,7 @@ class Config():
 
         # config declarations
         page.makeDeclaration("port", str(self.UDPPORT))
+        page.makeDeclaration("server-port", str(self.UDPPORTSERVER))
         page.makeDeclaration("timeout-in-ms", str(self.TIMEOUT))
 
         # create a stream to the specified config file

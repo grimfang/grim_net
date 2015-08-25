@@ -40,6 +40,8 @@ class UDPConnection():
         self.udpWriter = ConnectionWriter(self.udpManager, 0)
         self.udpSocket = self.udpManager.openUDPConnection(self.config.UDPPORT)
 
+        self.udpReader.addConnection(self.udpSocket)
+
 
     def startUDPTasks(self):
     	taskMgr.add(self.udpReaderTask, "udpReaderTask", -10)

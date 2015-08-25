@@ -20,8 +20,8 @@ class PacketManager():
     	pass
 
 
-    def handlePacket(self, _opcode, _data, _client):
-    	print _opcode, _data, _client
+    def handlePacket(self, _opcode, _data):
+    	print _opcode, _data
 
 
 

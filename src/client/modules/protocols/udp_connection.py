@@ -13,6 +13,8 @@ from panda3d.core import (
     NetAddress,
     DatagramIterator)
 
+from direct.task.Task import Task
+
 ## Client Imports ##
 from modules.packets.opcodes import MSG_NONE, MSG_HELLO_WORLD
 
@@ -39,7 +41,8 @@ class UDPConnection():
         self.udpReader = QueuedConnectionReader(self.udpManager, 0)
         self.udpWriter = ConnectionWriter(self.udpManager, 0)
         self.udpSocket = self.udpManager.openUDPConnection(self.config.UDPPORT)
-        #self.udpConnection = self.udpManager.openUDPClientConnection(self.config.UDPPROTOCOL)
+
+        self.udpReader.addConnection(self.udpSocket)
 
     def startUDPTasks(self):
     	taskMgr.add(self.udpReaderTask, "udpReaderTask", -10)
@@ -49,8 +52,17 @@ class UDPConnection():
         """
         Handle any data from clients by sending it to the Handlers.
         """
+        while 1:
+            (datagram, data, opcode) = self.udpNonBlockingRead(self.udpReader)
+            if opcode is MSG_NONE:
+                # Do nothing or use it as some 'keep_alive' thing.
+                break
+            else:
+                # Handle it
+                self.packetManager.handlePacket(opcode, data)
 
-        return task.cont
+        return Task.cont
+
 
     # UDP NonBlockingRead??
     def udpNonBlockingRead(self, qcr):
@@ -81,7 +93,7 @@ class UDPConnection():
         Sends a hello world message to the server
         """
         address = NetAddress()
-        address.setHost("127.0.0.1", self.config.UDPPORT)
+        address.setHost("127.0.0.1", self.config.UDPPORTSERVER)
         myPyDatagram = Datagram()
         myPyDatagram.addUint8(MSG_HELLO_WORLD)
         myPyDatagram.addString("Hello, world!")
