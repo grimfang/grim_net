@@ -16,13 +16,13 @@ from panda3d.core import DatagramIterator
 from direct.task.Task import Task
 
 ## Server Imports ##
-from modules.packets.opcodes import *
+from modules.packets.opcodes import MSG_NONE
 
 ########################################################################
 
 
 class UDPConnection():
-    
+
     def __init__(self, _serverManager):
     	print "UDP Connection Loaded"
     	self.packetManager = _serverManager.packetManager
@@ -54,11 +54,11 @@ class UDPConnection():
             (datagram, data, opcode) = self.udpNonBlockingRead(self.udpReader)
             if opcode is MSG_NONE:
                 # Do nothing or use it as some 'keep_alive' thing.
-                break 
+                break
             else:
                 # Handle it
                 self.packetManager.handlePacket(opcode, data, datagram.getConnection())
-                
+
         return Task.cont
 
 
@@ -73,15 +73,15 @@ class UDPConnection():
             if self.udpReader.getData(datagram):
                 data = DatagramIterator(datagram)
                 opcode = data.getUint8()
-                
+
             else:
                 data = None
                 opcode = MSG_NONE
-            
+
         else:
             datagram = None
             data = None
             opcode = MSG_NONE
-            
+
         # Return the datagram to keep a handle on the data
         return (datagram, data, opcode)

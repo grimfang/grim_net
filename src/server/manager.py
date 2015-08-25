@@ -16,7 +16,7 @@ from modules.protocols.udp_connection import UDPConnection
 
 
 class Manager():
-    
+
     def __init__(self, _server):
 
     	# Load Config
@@ -27,8 +27,4 @@ class Manager():
 
     	# Load UDP Connection
     	self.udpConnection = UDPConnection(self)
-
-
-
-
-        
+        self.udpConnection.start()

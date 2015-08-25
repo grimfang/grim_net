@@ -25,13 +25,13 @@ class Config():
         # set the variables using the config files content or set a default value
         self.MOTD = ConfigVariableString('motd', 'Welcome to grim-net!').getValue()
         self.HOSTNAME = ConfigVariableString('hostname', '127.0.0.1').getValue()
-        self.TCPPORT = ConfigVariableInt('tcp_port', '6000').getValue()
+        self.TCPPORT = ConfigVariableInt('tcp-port', '6000').getValue()
         self.BACKLOG = ConfigVariableInt('backlog', '10').getValue()
-        self.UDPPORT = ConfigVariableInt('udp_port', '6001').getValue()
+        self.UDPPORT = ConfigVariableInt('udp-port', '6001').getValue()
 
     def WritePRCFile(self):
         page = None
-        customConfigVariables = ["", "motd", "hostname", "tcp_port", "backlog", "udp_port"]
+        customConfigVariables = ["", "motd", "hostname", "tcp-port", "backlog", "udp-port"]
         if os.path.exists(prcFile):
             # load the existing config file
             page = loadPrcFile(Filename.fromOsSpecific(prcFile))
@@ -53,9 +53,9 @@ class Config():
         # config declarations
         page.makeDeclaration("motd", str(self.MOTD))
         page.makeDeclaration("hostname", str(self.HOSTNAME))
-        page.makeDeclaration("tcp_port", str(self.TCPPORT))
+        page.makeDeclaration("tcp-port", str(self.TCPPORT))
         page.makeDeclaration("backlog", str(self.BACKLOG))
-        page.makeDeclaration("udp_port", str(self.UDPPORT))
+        page.makeDeclaration("udp-port", str(self.UDPPORT))
 
         # create a stream to the specified config file
         configfile = OFileStream(prcFile)
