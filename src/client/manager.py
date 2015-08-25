@@ -2,10 +2,9 @@
 #----------------------------------------------------------------------#
 
 ## IMPORTS ##
-import sys
 
 ### PANDA Imports ###
-from direct.showbase.ShowBase import ShowBase
+from panda3d.core import QueuedConnectionManager
 
 ## Server Imports ##
 from config.config import Config
@@ -17,7 +16,7 @@ from modules.protocols.udp_connection import UDPConnection
 
 class Manager():
 
-    def __init__(self, _server):
+    def __init__(self, _client):
 
     	# Load Config
     	self.config = Config()

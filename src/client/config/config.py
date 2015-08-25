@@ -5,7 +5,6 @@
 import os
 from panda3d.core import (
     ConfigVariableInt,
-    ConfigVariableString,
     ConfigPageManager,
     OFileStream,
     loadPrcFile,
@@ -14,7 +13,7 @@ from panda3d.core import (
 
 ########################################################################
 
-prcFile = os.path.join("..", "server.prc")
+prcFile = os.path.join("..", "client.prc")
 
 class Config():
 
@@ -23,15 +22,12 @@ class Config():
         if os.path.exists(prcFile):
             loadPrcFile(Filename.fromOsSpecific(prcFile))
         # set the variables using the config files content or set a default value
-        self.MOTD = ConfigVariableString('motd', 'Welcome to grim-net!').getValue()
-        self.HOSTNAME = ConfigVariableString('hostname', '127.0.0.1').getValue()
-        self.TCPPORT = ConfigVariableInt('tcp-port', '6000').getValue()
-        self.BACKLOG = ConfigVariableInt('backlog', '10').getValue()
         self.UDPPORT = ConfigVariableInt('udp-port', '6001').getValue()
+        self.TIMEOUT = ConfigVariableInt('timeout-in-ms', '3000').getValue()
 
     def WritePRCFile(self):
         page = None
-        customConfigVariables = ["", "motd", "hostname", "tcp-port", "backlog", "udp-port"]
+        customConfigVariables = ["", "port", "timeout-in-ms"]
         if os.path.exists(prcFile):
             # load the existing config file
             page = loadPrcFile(Filename.fromOsSpecific(prcFile))
@@ -51,11 +47,8 @@ class Config():
             page = cpMgr.makeExplicitPage("Grim Net Pandaconfig")
 
         # config declarations
-        page.makeDeclaration("motd", str(self.MOTD))
-        page.makeDeclaration("hostname", str(self.HOSTNAME))
-        page.makeDeclaration("tcp-port", str(self.TCPPORT))
-        page.makeDeclaration("backlog", str(self.BACKLOG))
-        page.makeDeclaration("udp-port", str(self.UDPPORT))
+        page.makeDeclaration("port", str(self.UDPPORT))
+        page.makeDeclaration("timeout-in-ms", str(self.TIMEOUT))
 
         # create a stream to the specified config file
         configfile = OFileStream(prcFile)
