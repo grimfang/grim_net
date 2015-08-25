@@ -16,7 +16,7 @@ from panda3d.core import (
 from direct.task.Task import Task
 
 ## Client Imports ##
-from modules.packets.opcodes import MSG_NONE, MSG_HELLO_WORLD
+from shared.opcodes import MSG_NONE, MSG_HELLO_WORLD
 
 ########################################################################
 

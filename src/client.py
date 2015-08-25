@@ -7,8 +7,8 @@ import sys
 ### PANDA Imports ###
 from direct.showbase.ShowBase import ShowBase
 
-## Server Imports ##
-from manager import Manager
+## Client Imports ##
+from client.manager import Manager
 
 ########################################################################
 

@@ -16,7 +16,7 @@ from panda3d.core import DatagramIterator
 from direct.task.Task import Task
 
 ## Server Imports ##
-from modules.packets.opcodes import MSG_NONE
+from shared.opcodes import MSG_NONE
 
 ########################################################################
 

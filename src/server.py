@@ -8,7 +8,7 @@ import sys
 from direct.showbase.ShowBase import ShowBase
 
 ## Server Imports ##
-from manager import Manager
+from server.manager import Manager
 
 ########################################################################
 
