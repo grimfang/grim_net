@@ -94,3 +94,7 @@ class UDPConnection():
 
         # Return the datagram to keep a handle on the data
         return (datagram, data, opcode)
+
+
+    def sendPacket(self, _pkt):
+        self.udpWriter.send(_pkt, self.udpSocket, self.hostAddress)

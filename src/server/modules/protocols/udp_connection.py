@@ -61,7 +61,7 @@ class UDPConnection():
                 break
             else:
                 # Handle it
-                self.packetManager.handlePacket(opcode, data, datagram.getConnection())
+                self.packetManager.handlePacket(opcode, data, datagram.getAddress())
 
         return Task.cont
 
@@ -89,3 +89,8 @@ class UDPConnection():
 
         # Return the datagram to keep a handle on the data
         return (datagram, data, opcode)
+
+
+    def sendPacket(self, _pkt, _addr):
+
+        self.udpWriter.send(_pkt, self.udpSocket, _addr)
