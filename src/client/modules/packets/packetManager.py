@@ -28,7 +28,9 @@ class PacketManager():
     	self.udpSocket = self.clientManager.udpConnection.udpSocket
     	self.hostAddress = self.clientManager.udpConnection.hostAddress
 
-    	self.opcodeMethods = {}
+    	self.opcodeMethods = {
+    		MSG_REGISTER_ACK: self.test
+    	}
 
     def handlePacket(self, _opcode, _data):
     	self.opcodeMethods[_opcode](_data)
@@ -37,6 +39,9 @@ class PacketManager():
     def sendRegister(self, _data):
     	pkt = self.packet.buildRegister(_data)
     	self.clientManager.udpConnection.udpWriter.send(pkt, self.udpSocket, self.hostAddress)
+
+    def test(self, _data):
+    	print _data
 
 
 

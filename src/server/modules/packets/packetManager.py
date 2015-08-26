@@ -9,6 +9,7 @@ from direct.showbase.ShowBase import ShowBase
 
 ## Server Imports ##
 from shared.opcodes import *
+from packet import Packet
 
 ########################################################################
 
@@ -18,6 +19,8 @@ class PacketManager():
     def __init__(self, _serverManager):
 
     	self.serverManager = _serverManager
+
+    	self.packet = Packet(self)
     	# Opcodes from clients
     	self.opcodeMethods = {}
 

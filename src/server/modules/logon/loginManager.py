@@ -25,8 +25,13 @@ class LoginManager():
     def handleRegister(self, _data, _client):
     	print "MSG in Packet:", _data.getString()
     	cid = generateUUID()
-    	addr = _client
+    	addr = _client.getAddress()
 
     	self.serverManager.clients[cid] = Client(cid, addr)
+
+    	# Send reply to client
+    	pkt = self.serverManager.packetManager.packet.buildRegisterACK(cid)
+    	udpSocket = self.serverManager.udpConnection.udpSocket
+    	self.serverManager.udpConnection.udpWriter.send(pkt, udpSocket, addr)
 
     	
