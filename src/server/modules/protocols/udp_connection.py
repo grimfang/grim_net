@@ -25,6 +25,7 @@ class UDPConnection():
 
     def __init__(self, _serverManager):
     	print "UDP Connection Loaded"
+        self.serverManager = _serverManager
     	self.packetManager = _serverManager.packetManager
     	self.config = _serverManager.config
 
@@ -92,5 +93,11 @@ class UDPConnection():
 
 
     def sendPacket(self, _pkt, _addr):
-
         self.udpWriter.send(_pkt, self.udpSocket, _addr)
+
+
+    def sendBroadcastPacket(self, _pkt):
+        for client in self.serverManager.clients:
+            addr = self.serverManager.clients[client].address
+            self.udpWriter.send(_pkt, self.udpSocket, addr)
+
