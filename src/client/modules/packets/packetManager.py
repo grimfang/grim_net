@@ -26,7 +26,7 @@ class PacketManager():
 
     def start(self):
     	self.opcodeMethods = {
-    		MSG_REGISTER_ACK: self.test
+    		MSG_REGISTER_ACK: self.setID
     	}
 
     def handlePacket(self, _opcode, _data):
@@ -37,8 +37,12 @@ class PacketManager():
     	pkt = self.packet.buildRegister(_data)
     	self.clientManager.udpConnection.sendPacket(pkt)
 
-    def test(self, _data):
-    	print _data
+
+
+    ### HANDLE SIMPLE STUFF HERE ###
+    def setID(self, _data):
+    	self.clientManager.localID = _data.getString()
+        print "Local ID:", self.clientManager.localID
 
 
 

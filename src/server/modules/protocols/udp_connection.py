@@ -43,8 +43,6 @@ class UDPConnection():
 
         self.udpReader.addConnection(self.udpSocket)
 
-        print "UDP WRITER QUE:", self.udpWriter.getNumThreads()
-
 
     def startUDPTasks(self):
     	taskMgr.add(self.udpReaderTask, "udpReaderTask", -10)

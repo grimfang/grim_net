@@ -25,7 +25,6 @@ class Packet():
 
     	pkt = Datagram()
     	pkt.addUint8(MSG_REGISTER_ACK)
-
     	pkt.addString(_data)
 
     	return pkt

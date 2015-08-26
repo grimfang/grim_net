@@ -17,6 +17,8 @@ from modules.protocols.udp_connection import UDPConnection
 class Manager():
 
     def __init__(self, _client):
+        # Local ID
+        self.localID = None
 
     	# Load Config
     	self.config = Config()
@@ -34,4 +36,4 @@ class Manager():
 
 
         # Send Register MSG
-        self.packetManager.sendRegister("HEllo World")
+        self.packetManager.sendRegister("Hello World!")

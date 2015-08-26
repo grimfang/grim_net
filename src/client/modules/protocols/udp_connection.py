@@ -30,7 +30,7 @@ class UDPConnection():
     	self.config = _clientManager.config
 
     def start(self):
-        print "start UDP Connection"
+        print "Start UDP Connection"
     	self.setupUDP()
     	self.startUDPTasks()
         self.setHost()
