@@ -16,7 +16,7 @@ from panda3d.core import (
 from direct.task.Task import Task
 
 ## Client Imports ##
-from shared.opcodes import MSG_NONE, MSG_HELLO_WORLD
+from shared.opcodes import MSG_NONE
 
 ########################################################################
 
@@ -25,6 +25,7 @@ class UDPConnection():
 
     def __init__(self, _clientManager):
     	print "UDP Connection Loaded"
+        self.clientManager = _clientManager
     	self.packetManager = _clientManager.packetManager
     	self.config = _clientManager.config
 
@@ -32,6 +33,12 @@ class UDPConnection():
         print "start UDP Connection"
     	self.setupUDP()
     	self.startUDPTasks()
+        self.setHost()
+
+    def setHost(self):
+        # Add option to change host address if needed, aka custom ip
+        self.hostAddress = NetAddress()
+        self.hostAddress.setHost(self.config.SERVERIP, self.config.UDPPORTSERVER)
 
     def stop(self):
         self.udpManager.closeConnection(self.udpSocket)
@@ -87,14 +94,3 @@ class UDPConnection():
 
         # Return the datagram to keep a handle on the data
         return (datagram, data, opcode)
-
-    def sendHelloMsg(self):
-        """
-        Sends a hello world message to the server
-        """
-        address = NetAddress()
-        address.setHost("127.0.0.1", self.config.UDPPORTSERVER)
-        myPyDatagram = Datagram()
-        myPyDatagram.addUint8(MSG_HELLO_WORLD)
-        myPyDatagram.addString("Hello, world!")
-        self.udpWriter.send(myPyDatagram, self.udpSocket, address)

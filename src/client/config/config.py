@@ -5,6 +5,7 @@
 import os
 from panda3d.core import (
     ConfigVariableInt,
+    ConfigVariableString,
     ConfigPageManager,
     OFileStream,
     loadPrcFile,
@@ -24,11 +25,12 @@ class Config():
         # set the variables using the config files content or set a default value
         self.UDPPORT = ConfigVariableInt('udp-port', '6002').getValue()
         self.UDPPORTSERVER = ConfigVariableInt('udp-port-server', '6001').getValue()
+        self.SERVERIP = ConfigVariableString('server-ip', '127.0.0.1').getValue()
         self.TIMEOUT = ConfigVariableInt('timeout-in-ms', '3000').getValue()
 
     def WritePRCFile(self):
         page = None
-        customConfigVariables = ["", "port", "server-port", "timeout-in-ms"]
+        customConfigVariables = ["", "port", "server-port", "server-ip","timeout-in-ms"]
         if os.path.exists(prcFile):
             # load the existing config file
             page = loadPrcFile(Filename.fromOsSpecific(prcFile))
@@ -50,6 +52,7 @@ class Config():
         # config declarations
         page.makeDeclaration("port", str(self.UDPPORT))
         page.makeDeclaration("server-port", str(self.UDPPORTSERVER))
+        page.makeDeclaration("server-ip", str(self.SERVERIP))
         page.makeDeclaration("timeout-in-ms", str(self.TIMEOUT))
 
         # create a stream to the specified config file
@@ -62,5 +65,4 @@ class Config():
 
 #s = Config()
 #s.WritePRCFile()
-# Writing & Testing
-#s = Config()
+

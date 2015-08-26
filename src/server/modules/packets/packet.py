@@ -12,23 +12,9 @@ from shared.opcodes import *
 
 ########################################################################
 
-
-class PacketManager():
+# This class methods will return the needed packet.
+class Packet():
     
     def __init__(self, _serverManager):
 
-    	self.serverManager = _serverManager
-    	# Opcodes from clients
-    	self.opcodeMethods = {}
-
-    def start(self):
-    	self.opcodeMethods = {
-    		MSG_REGISTER: self.serverManager.loginManager.handleRegister
-    	}
-
-
-    def handlePacket(self, _opcode, _data, _client):
-    	self.opcodeMethods[_opcode](_data, _client)
-
-
-
+    	pass

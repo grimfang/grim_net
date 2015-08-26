@@ -27,3 +27,11 @@ class Manager():
     	# Load UDP Connection
     	self.udpConnection = UDPConnection(self)
         self.udpConnection.start()
+
+
+        ## START SUB MANAGERS ##
+        self.packetManager.start()
+
+
+        # Send Register MSG
+        self.packetManager.sendRegister("HEllo World")

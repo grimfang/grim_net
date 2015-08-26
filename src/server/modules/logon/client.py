@@ -7,20 +7,17 @@ import sys
 ### PANDA Imports ###
 from direct.showbase.ShowBase import ShowBase
 
-## Client Imports ##
-from client.manager import Manager
+## Server Imports ##
 
 ########################################################################
 
-class Client(ShowBase):
 
-    def __init__(self):
-        ShowBase.__init__(self)
+class Client():
 
-        # Load Manager
-        self.manager = Manager(self)
+	def __init__(self, _id, _addr):
+		self.id = _id
+		self.address = _addr
 
-
-
-client = Client()
-client.run()
+		print "Client Created with ID: ", self.id, " at address: ", self.address
+    
+    
