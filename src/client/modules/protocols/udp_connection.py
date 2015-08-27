@@ -2,6 +2,7 @@
 #----------------------------------------------------------------------#
 
 ## IMPORTS ##
+from random import randint
 
 ### PANDA Imports ###
 from panda3d.core import (
@@ -43,11 +44,19 @@ class UDPConnection():
     def stop(self):
         self.udpManager.closeConnection(self.udpSocket)
 
+    ### JUST FOR TESTING ON SAME PC
+    def genPort(self):
+        port = randint(6005, 8000)
+        print "Generated port:", port
+
+        return port
+    ###############################
+
     def setupUDP(self):
     	self.udpManager = QueuedConnectionManager()
         self.udpReader = QueuedConnectionReader(self.udpManager, 0)
         self.udpWriter = ConnectionWriter(self.udpManager, 0)
-        self.udpSocket = self.udpManager.openUDPConnection(self.config.UDPPORT)
+        self.udpSocket = self.udpManager.openUDPConnection(self.genPort())
 
         self.udpReader.addConnection(self.udpSocket)
 

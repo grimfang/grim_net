@@ -94,8 +94,11 @@ class UDPConnection():
         self.udpWriter.send(_pkt, self.udpSocket, _addr)
 
 
-    def sendBroadcastPacket(self, _pkt):
+    def sendBroadcast(self, _pkt, _skipif=None):
         for client in self.serverManager.clients:
-            addr = self.serverManager.clients[client].address
-            self.udpWriter.send(_pkt, self.udpSocket, addr)
+            if _skipif == client:
+                pass
+            else:
+                addr = self.serverManager.clients[client].address
+                self.udpWriter.send(_pkt, self.udpSocket, addr)
 

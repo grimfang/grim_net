@@ -33,4 +33,8 @@ class LoginManager():
     	pkt = self.serverManager.packetManager.packet.buildRegisterACK(cid)
     	self.serverManager.udpConnection.sendPacket(pkt, addr)
 
+        # Update other clients about the new client
+        pkt = self.serverManager.packetManager.packet.buildRegisterBroadcast(cid)
+        self.serverManager.udpConnection.sendBroadcast(pkt, cid)
+
     	

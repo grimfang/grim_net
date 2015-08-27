@@ -26,7 +26,8 @@ class PacketManager():
 
     def start(self):
     	self.opcodeMethods = {
-    		MSG_REGISTER_ACK: self.setID
+    		MSG_REGISTER_ACK: self.setID,
+            MSG_REGISTER_BROADCAST: self.test
     	}
 
     def handlePacket(self, _opcode, _data):
@@ -43,6 +44,9 @@ class PacketManager():
     def setID(self, _data):
     	self.clientManager.localID = _data.getString()
         print "Local ID:", self.clientManager.localID
+
+    def test(self, _data):
+        print _data
 
 
 
