@@ -16,30 +16,11 @@ from shared.opcodes import *
 
 # This class methods will return the needed packet.
 class Packet():
-    
-    def __init__(self, _packetManager):
 
-    	self.packetManager = _packetManager
+    # Do some packing
+    @classmethod
+    def pack(cls, _opcode, _data):
 
-
-    def buildRegisterACK(self, _data):
-
-    	pkt = NetDatagram()
-    	pkt.addUint8(MSG_REGISTER_ACK)
-    	pkt.addString(_data)
-
-    	return pkt
-
-    def buildRegisterBroadcast(self, _data):
-
-    	pkt = Datagram()
-    	pkt.addUint8(MSG_REGISTER_BROADCAST)
-    	pkt.addString(_data)
-
-    	return pkt
-
-
-    def buildPacket(self, _opcode, _data):
     	pkt = NetDatagram()
 
     	# Opcode
@@ -81,6 +62,11 @@ class Packet():
     		elif type(_data[d]) is float:
     			pkt.addFloat32(_data[d])
 
-    	return pkt
+        return pkt
+
+    @classmethod
+    def unpack(cls, _pkt):
+        pass
+
     	
 

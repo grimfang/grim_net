@@ -11,7 +11,7 @@ from direct.showbase.ShowBase import ShowBase
 from config.config import Config
 from modules.packets.packetManager import PacketManager
 from modules.protocols.udp_connection import UDPConnection
-from modules.logon.loginManager import LoginManager
+from modules.lobby.lobbyManager import LobbyManager
 
 ########################################################################
 
@@ -32,8 +32,8 @@ class Manager():
     	self.udpConnection = UDPConnection(self)
         self.udpConnection.start()
 
-        # Load Login Manager
-        self.loginManager = LoginManager(self)
+        # Load Lobby Manager
+        self.lobbyManager = LobbyManager(self)
 
 
         ## LOAD OPCODES ## START SUB MANAGERS ##

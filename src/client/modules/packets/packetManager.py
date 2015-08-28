@@ -9,7 +9,7 @@ from direct.showbase.ShowBase import ShowBase
 
 ## Server Imports ##
 from shared.opcodes import *
-from packet import Packet
+from shared.packet import Packet
 
 ########################################################################
 
@@ -18,7 +18,6 @@ class PacketManager():
     
     def __init__(self, _clientManager):
     	self.clientManager = _clientManager
-    	self.packet = Packet(self)
 
     	# Opcodes from server
     	self.opcodeMethods = {}
@@ -26,8 +25,8 @@ class PacketManager():
 
     def start(self):
     	self.opcodeMethods = {
-    		MSG_REGISTER_ACK: self.setID,
-            MSG_REGISTER_BROADCAST: self.test
+    		SMSG_MOVE_TO_LOBBY: self.setID,
+            SMSG_UPDATE_LOBBY_LIST: self.test
     	}
 
     def handlePacket(self, _opcode, _data):
@@ -35,7 +34,7 @@ class PacketManager():
 
 
     def sendRegister(self, _data):
-    	pkt = self.packet.buildRegister(_data)
+    	pkt = Packet.pack(CMSG_JOIN_LOBBY, _data)
     	self.clientManager.udpConnection.sendPacket(pkt)
 
 
@@ -43,11 +42,12 @@ class PacketManager():
     ### HANDLE SIMPLE STUFF HERE ###
     def setID(self, _data):
         length = _data.getUint8()
+        print "length:", length
     	#self.clientManager.localID = _data.getString()
         #print "Local ID:", self.clientManager.localID
         listStrings = []
         for x in range(length):
-            listStrings = _data.getString()
+            listStrings.append(_data.getString())
 
         print listStrings
 
