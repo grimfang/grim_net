@@ -42,10 +42,16 @@ class Packet():
     def buildPacket(self, _opcode, _data):
     	pkt = NetDatagram()
 
+    	# Opcode
     	pkt.addUint8(_opcode)
+
+    	# Length
+    	pkt.addUint8(len(_data))
 
     	# Read the data from the _data var and add types to the packet as needed
     	for d in range(len(_data)):
+
+    		# Strings
     		if type(_data[d]) is str:
     			pkt.addString(_data[d])
 
@@ -74,7 +80,6 @@ class Packet():
     		# Float
     		elif type(_data[d]) is float:
     			pkt.addFloat32(_data[d])
-
 
     	return pkt
     	

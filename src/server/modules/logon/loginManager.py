@@ -29,10 +29,13 @@ class LoginManager():
 
     	self.serverManager.clients[cid] = Client(cid, addr)
 
-    	# Send reply to client
-    	#pkt = self.serverManager.packetManager.packet.buildRegisterACK(cid)
-    	#self.serverManager.udpConnection.sendPacket(pkt, addr)
-        pkt = self.serverManager.packetManager.packet.buildPacket(MSG_REGISTER_ACK, [cid])
+    	# Send reply to client & tell client about other already connected clients
+        for client in self.serverManager.clients:
+            connectedClientIds = []
+            ids = self.serverManager.clients[client].id
+            connectedClientIds.append(ids)
+
+        pkt = self.serverManager.packetManager.packet.buildPacket(MSG_REGISTER_ACK, connectedClientIds)
         self.serverManager.udpConnection.sendPacket(pkt, addr)
 
         # Update other clients about the new client

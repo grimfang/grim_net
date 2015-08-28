@@ -42,8 +42,14 @@ class PacketManager():
 
     ### HANDLE SIMPLE STUFF HERE ###
     def setID(self, _data):
-    	self.clientManager.localID = _data.getString()
-        print "Local ID:", self.clientManager.localID
+        length = _data.getUint8()
+    	#self.clientManager.localID = _data.getString()
+        #print "Local ID:", self.clientManager.localID
+        listStrings = []
+        for x in range(length):
+            listStrings = _data.getString()
+
+        print listStrings
 
     def test(self, _data):
         print _data
