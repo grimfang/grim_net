@@ -40,13 +40,17 @@ class LobbyManager():
         # Phase 2
         # tell the client about the connected clients
         # already in the lobby
+        print len(self.clients)
+
         if len(self.clients) > 1:
             listOfClients = []
             for c in self.clients:
                 if c == newId:
                     pass
                 else:
-                    listOfClients.append(c)
+                    listOfClients.append(self.clients[c].id)
+
+            print "LIST:", listOfClients
 
             pkt = Packet.pack(SMSG_UPDATE_LOBBY_LIST, listOfClients)
             self.serverManager.udpConnection.sendPacket(pkt, _client)

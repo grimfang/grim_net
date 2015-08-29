@@ -52,7 +52,15 @@ class PacketManager():
         print listStrings
 
     def test(self, _data):
-        print _data
+        length = _data.getUint8()
+        print "length:", length
+        #self.clientManager.localID = _data.getString()
+        #print "Local ID:", self.clientManager.localID
+        listStrings = []
+        for x in range(length):
+            listStrings.append(_data.getString())
+
+        print listStrings
 
 
 
