@@ -48,16 +48,14 @@ class LobbyManager():
                 if c == newId:
                     pass
                 else:
-                    listOfClients.append(self.clients[c].id)
-
-            print "LIST:", listOfClients
+                    listOfClients.append(c)
 
             pkt = Packet.pack(SMSG_UPDATE_LOBBY_LIST, listOfClients)
             self.serverManager.udpConnection.sendPacket(pkt, _client)
 
             # Phase 3
             # tell other clients about this new client
-            pkt = Packet.pack(SMSG_UPDATE_LOBBY_LIST, newId)
+            pkt = Packet.pack(SMSG_UPDATE_LOBBY_LIST, [newId])
             self.serverManager.udpConnection.sendBroadcast(pkt, newId)
 
 
