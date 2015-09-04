@@ -25,7 +25,7 @@ class TCPConnection():
 
     def __init__(self, _clientManager):
     	print "TCP Connection Loaded"
-        self.serverManager = _clientManager
+        self.clientManager = _clientManager
     	self.packetManager = _clientManager.packetManager
     	self.config = _clientManager.config
 
@@ -94,3 +94,6 @@ class TCPConnection():
 
         if self.tcpConnection != None:
             self.tcpReader.addConnection(self.tcpConnection)
+            # Close the main menu and move the client into the game
+            # for now we will make a shortcut
+            self.clientManager.guiManager.menu.hide()
