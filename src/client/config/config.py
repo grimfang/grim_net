@@ -24,13 +24,14 @@ class Config():
             loadPrcFile(Filename.fromOsSpecific(prcFile))
         # set the variables using the config files content or set a default value
         self.UDPPORT = ConfigVariableInt('udp-port', '6002').getValue()
+        self.TCPPORT = ConfigVariableInt('tcp-port', '6003').getValue()
         self.UDPPORTSERVER = ConfigVariableInt('udp-port-server', '6001').getValue()
         self.SERVERIP = ConfigVariableString('server-ip', '127.0.0.1').getValue()
         self.TIMEOUT = ConfigVariableInt('timeout-in-ms', '3000').getValue()
 
     def WritePRCFile(self):
         page = None
-        customConfigVariables = ["", "port", "server-port", "server-ip","timeout-in-ms"]
+        customConfigVariables = ["", "tcp-port","udp-port", "server-port", "server-ip","timeout-in-ms"]
         if os.path.exists(prcFile):
             # load the existing config file
             page = loadPrcFile(Filename.fromOsSpecific(prcFile))
@@ -50,7 +51,8 @@ class Config():
             page = cpMgr.makeExplicitPage("Grim Net Pandaconfig")
 
         # config declarations
-        page.makeDeclaration("port", str(self.UDPPORT))
+        page.makeDeclaration("udp-port", str(self.UDPPORT))
+        page.makeDeclaration("tcp-port", str(self.TCPPORT))
         page.makeDeclaration("server-port", str(self.UDPPORTSERVER))
         page.makeDeclaration("server-ip", str(self.SERVERIP))
         page.makeDeclaration("timeout-in-ms", str(self.TIMEOUT))
