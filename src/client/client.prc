@@ -1,4 +1,4 @@
-port 6002  (not used)  (not used)
+port 6002  (not used)  (not used)  (not used)
 udp-port 6002
 tcp-port 6003
 server-port 6001  (not used)

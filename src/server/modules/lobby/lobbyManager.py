@@ -24,24 +24,24 @@ class LobbyManager():
         self.clients = _serverManager.clients
 
 
-    def handleJoinLobby(self, _data, _client):
+    def handleJoinLobby(self, _connection, _netAddress):
 
         # Create UUID for the new client  / later we will check if client already has UUID (save games?)
         newId = generateUUID()
 
         # Create and store client object for the server, to handle client related things
-        self.clients[newId] = Client(newId, _client)
+        self.clients[newId] = Client(newId, _connection, _netAddress)
 
         # Phase 1
         # tell the client to move to the lobby screen 
         pkt = Packet.pack(SMSG_MOVE_TO_LOBBY, [newId])
-        self.serverManager.udpConnection.sendPacket(pkt, _client)
+        self.serverManager.tcpConnection.sendPacket(pkt, _connection)
+
+        print newId, _connection
 
         # Phase 2
         # tell the client about the connected clients
         # already in the lobby
-        print len(self.clients)
-
         if len(self.clients) > 1:
             listOfClients = []
             for c in self.clients:
@@ -51,12 +51,12 @@ class LobbyManager():
                     listOfClients.append(c)
 
             pkt = Packet.pack(SMSG_UPDATE_LOBBY_LIST, listOfClients)
-            self.serverManager.udpConnection.sendPacket(pkt, _client)
+            self.serverManager.tcpConnection.sendPacket(pkt, _connection)
 
             # Phase 3
             # tell other clients about this new client
             pkt = Packet.pack(SMSG_UPDATE_LOBBY_LIST, [newId])
-            self.serverManager.udpConnection.sendBroadcast(pkt, newId)
+            self.serverManager.tcpConnection.sendBroadcast(pkt, newId)
 
 
 

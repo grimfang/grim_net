@@ -15,10 +15,12 @@ from direct.showbase.ShowBase import ShowBase
 
 class Client():
     
-    def __init__(self, _id, _address):
+    def __init__(self, _id, _connection, _netAddress):
 
     	self.id = _id
-    	self.address = _address
+    	self.connection = _connection
+    	self.netAddress = _netAddress
 
-    	print "Client: ", self.id, " from:", self.address, ' Connected'
+    	print "Client: ", self.id, " from:", self.connection, ' Connected'
+    	print "NetAddress:", self.netAddress
 

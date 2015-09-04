@@ -9,6 +9,7 @@ from panda3d.core import QueuedConnectionManager
 ## Server Imports ##
 from config.config import Config
 from modules.packets.packetManager import PacketManager
+from modules.protocols.tcp_connection import TCPConnection
 from modules.protocols.udp_connection import UDPConnection
 
 ########################################################################
@@ -26,6 +27,10 @@ class Manager():
     	# Load Packet Manager
     	self.packetManager = PacketManager(self)
 
+        # Load TCP Connection
+        self.tcpConnection = TCPConnection(self)
+        self.tcpConnection.start()
+
     	# Load UDP Connection
     	self.udpConnection = UDPConnection(self)
         self.udpConnection.start()
@@ -34,6 +39,6 @@ class Manager():
         ## START SUB MANAGERS ##
         self.packetManager.start()
 
+        # Connect to server
+        self.tcpConnection.joinServerLobby('127.0.0.1', 6000)
 
-        # Send Register MSG
-        self.packetManager.sendRegister("Hello World!")

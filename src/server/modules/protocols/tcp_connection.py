@@ -50,6 +50,8 @@ class TCPConnection():
         print "TCP Listener Started"
     	taskMgr.add(self.tcpReaderTask, "tcpReaderTask", -10)
     	print "TCP Reader Started"
+        taskMgr.add(self.tcpDisconnectionHandler, "tcpDisconnectionHandler", 20)
+        print "TCP Disconnection Handler Started"
 
     # TCP Listener Task
     def tcpListenerTask(self, task):
@@ -67,7 +69,7 @@ class TCPConnection():
                 
                 # Tell the reader about the new TCP connection
                 self.tcpReader.addConnection(newConnection)
-                self.server.activeConnections.append(newConnection)
+                self.serverManager.lobbyManager.handleJoinLobby(newConnection, netAddress)
                     
                 print "Server: New Connection from -", str(netAddress.getIpString())
             else:
@@ -118,8 +120,26 @@ class TCPConnection():
         return (datagram, data, opcode)
 
 
-    def sendPacket(self, _pkt, _addr):
-        self.tcpWriter.send(_pkt, self.udpSocket, _addr)
+    # TCP Disconnection Handler
+    def tcpDisconnectionHandler(self, task):
+        # Check for resets
+        if self.tcpManager.resetConnectionAvailable():
+            resetConnection = PointerToConnection()
+            self.tcpManager.getResetConnection(resetConnection)
+            
+            for client in self.serverManager.clients:
+                if self.serverManager.clients[client].connection == resetConnection.p():
+                    del self.serverManager.clients[client]
+                    self.tcpReader.removeConnection(resetConnection.p())
+                    print "Removed Connection:", resetConnection.p()
+                    print 'Current Clients:', self.serverManager.clients
+                    break
+
+        return Task.cont
+
+
+    def sendPacket(self, _pkt, _connection):
+        self.tcpWriter.send(_pkt, _connection)
 
 
     def sendBroadcast(self, _pkt, _skipif=None):
@@ -127,5 +147,5 @@ class TCPConnection():
             if _skipif == client:
                 pass
             else:
-                addr = self.serverManager.clients[client].address
-                self.udpWriter.send(_pkt, self.udpSocket, addr)
+                conn = self.serverManager.clients[client].connection
+                self.tcpWriter.send(_pkt, conn)

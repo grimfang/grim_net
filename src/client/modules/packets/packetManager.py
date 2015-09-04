@@ -31,13 +31,7 @@ class PacketManager():
 
     def handlePacket(self, _opcode, _data):
     	self.opcodeMethods[_opcode](_data)
-
-
-    def sendRegister(self, _data):
-    	pkt = Packet.pack(CMSG_JOIN_LOBBY, _data)
-    	self.clientManager.udpConnection.sendPacket(pkt)
-
-
+        
 
     ### HANDLE SIMPLE STUFF HERE ###
     def setID(self, _data):
@@ -49,7 +43,7 @@ class PacketManager():
         for x in range(length):
             listStrings.append(_data.getString())
 
-        print listStrings
+        print "MY ID", listStrings
 
     def test(self, _data):
         length = _data.getUint8()
@@ -60,7 +54,7 @@ class PacketManager():
         for x in range(length):
             listStrings.append(_data.getString())
 
-        print listStrings
+        print "OTHER IDS", listStrings
 
 
 

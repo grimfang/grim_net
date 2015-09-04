@@ -29,6 +29,9 @@ class TCPConnection():
     	self.packetManager = _clientManager.packetManager
     	self.config = _clientManager.config
 
+        # Connection on TCP 
+        self.tcpConnection = None
+
 
     def start(self):
     	self.setupTCP()
@@ -56,7 +59,7 @@ class TCPConnection():
                 break
             else:
                 # Handle it
-                self.packetManager.handlePacket(opcode, data, datagram.getAddress())
+                self.packetManager.handlePacket(opcode, data)
 
         return Task.cont
 
@@ -86,9 +89,8 @@ class TCPConnection():
         return (datagram, data, opcode)
 
 
-    def makeConnection(self, _ip):
-        self.tcpConnection = self.tcpManager.openTCPClientConnection(_ip, self.config.TCPPORT, 1000)
+    def joinServerLobby(self, _ip, _port):
+        self.tcpConnection = self.tcpManager.openTCPClientConnection(_ip, _port, 1000)
 
         if self.tcpConnection != None:
-            pass
-            # Add connection to reader
+            self.tcpReader.addConnection(self.tcpConnection)
