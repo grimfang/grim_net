@@ -4,13 +4,13 @@
 ## IMPORTS ##
 
 ### PANDA Imports ###
-from panda3d.core import QueuedConnectionManager
 
 ## Server Imports ##
 from config.config import Config
 from modules.packets.packetManager import PacketManager
 from modules.protocols.tcp_connection import TCPConnection
 from modules.protocols.udp_connection import UDPConnection
+from modules.gui.guiManager import GuiManager
 
 ########################################################################
 
@@ -35,10 +35,10 @@ class Manager():
     	self.udpConnection = UDPConnection(self)
         self.udpConnection.start()
 
+        # Load GUI Manager
+        self.guiManager = GuiManager(self)
 
-        ## START SUB MANAGERS ##
+        #### START SUB MANAGERS Should only start when they are really needed ####
         self.packetManager.start()
-
-        # Connect to server
-        self.tcpConnection.joinServerLobby('127.0.0.1', 6000)
+    
 
