@@ -5,7 +5,6 @@
 import sys
 
 ### PANDA Imports ###
-from direct.showbase.ShowBase import ShowBase
 
 ## Server Imports ##
 from config.config import Config
