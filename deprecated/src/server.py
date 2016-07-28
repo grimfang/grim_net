@@ -8,6 +8,7 @@ import sys
 from direct.showbase.ShowBase import ShowBase
 
 ## Server Imports ##
+from server.manager import Manager
 
 ########################################################################
 
@@ -22,6 +23,14 @@ class Server(ShowBase):
             ShowBase.__init__(self)
         else:
             ShowBase.__init__(self, windowType = 'none')
+
+        # Load Manager
+        self.manager = Manager(self)
+
+
+        # Print MOTD *testing
+        print self.manager.config.MOTD
+
 
 server = Server()
 server.run()

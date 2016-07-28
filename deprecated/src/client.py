@@ -7,21 +7,20 @@ import sys
 ### PANDA Imports ###
 from direct.showbase.ShowBase import ShowBase
 
-## Server Imports ##
+## Client Imports ##
+from client.manager import Manager
 
 ########################################################################
 
-
-class Server(ShowBase):
+class Client(ShowBase):
 
     def __init__(self):
+        ShowBase.__init__(self)
 
-        args = str(sys.argv)
+        # Load Manager
+        self.manager = Manager(self)
 
-        if "-window" in args:
-            ShowBase.__init__(self)
-        else:
-            ShowBase.__init__(self, windowType = 'none')
 
-server = Server()
-server.run()
+
+client = Client()
+client.run()
