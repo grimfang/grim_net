@@ -9,7 +9,8 @@ from direct.showbase.ShowBase import ShowBase
 
 ## Server Imports ##
 from Server.Config.Config import Config
-from Server.Core.Master import Master
+from Server.Core.Core import Core
+from Server.Framework.GameFramework import GameFramework
 
 ########################################################################
 
@@ -30,9 +31,10 @@ class Server(ShowBase):
         self.config = Config()
 
         # Start Master
-        self.master = Master(self)
+        self.core = Core(self)
 
         # Start Game Framework
+        self.gameFramework = GameFramework(self)
         
 
 server = Server()

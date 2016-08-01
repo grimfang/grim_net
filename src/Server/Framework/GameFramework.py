@@ -8,25 +8,22 @@
 
 
 ## Server Imports ##
-import Server.Utils.Util
-from Network.Protocols.TCP import TCP
 
 
 ########################################################################
 
 
-class Master():
+class GameFramework():
 
     def __init__(self, _server):
 
         self.server = _server
 
-        # Load TCP Protocol
-        self.tcp = TCP(self)
+        self.clients = {}
 
-        # Load UDP Protocol
-
-        # Connections
-        self.connections = []
+    def createNewClient(self, _uuid, _connection, _ipAddress):
+    	self.clients[_uuid] = {}
+    	self.clients[_uuid]['connection'] = _connection
+    	self.clients[_uuid]['ipAddress'] = _ipAddress
 
         

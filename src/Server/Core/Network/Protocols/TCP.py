@@ -14,16 +14,18 @@ from panda3d.core import Datagram
 from panda3d.core import DatagramIterator
 
 from direct.task.Task import Task
+from Server.Core.Network.Packets.Opcodes import MSG_NONE
+from Server.Utils.Util import generateUUID
 
 ########################################################################
 
 
 class TCP():
 
-    def __init__(self, _master):
+    def __init__(self, _core):
     	print "TCP Protocol Init"
-        self.master = _master
-    	self.config = self.master.config
+        self.core = _core
+    	self.config = self.core.server.config
 
 
     def start(self):
@@ -65,7 +67,7 @@ class TCP():
                 
                 # Tell the reader about the new TCP connection
                 self.tcpReader.addConnection(newConnection)
-                #self.serverManager.lobbyManager.handleJoinLobby(newConnection, netAddress)
+                self.core.server.gameFramework.createNewClient(generateUUID(),newConnection, netAddress)
                     
                 print "Server: New Connection from -", str(netAddress.getIpString())
             else:
@@ -87,6 +89,7 @@ class TCP():
             else:
                 # Handle it
                 #self.packetManager.handlePacket(opcode, data, datagram.getAddress())
+                print "something"
 
         return Task.cont
 
@@ -125,10 +128,10 @@ class TCP():
             
             for client in self.serverManager.clients:
                 if self.serverManager.clients[client].connection == resetConnection.p():
-                    del self.serverManager.clients[client]
+                    #del self.serverManager.clients[client]
                     self.tcpReader.removeConnection(resetConnection.p())
-                    print "Removed Connection:", resetConnection.p()
-                    print 'Current Clients:', self.serverManager.clients
+                    #print "Removed Connection:", resetConnection.p()
+                    #print 'Current Clients:', self.serverManager.clients
                     break
 
         return Task.cont
