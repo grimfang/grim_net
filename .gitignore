@@ -51,3 +51,6 @@ coverage.xml
 
 # PyBuilder
 target/
+
+# Dolphin shit
+.directory
