@@ -31,10 +31,11 @@ class Config():
         self.TCPPORT = ConfigVariableInt('tcp-port', '6000').getValue()
         self.BACKLOG = ConfigVariableInt('backlog', '10').getValue()
         self.UDPPORT = ConfigVariableInt('udp-port', '6001').getValue()
+        self.ISPERSISTENT = ConfigVariableInt('isPersistent', '0').getValue()
 
     def WritePRCFile(self):
         page = None
-        customConfigVariables = ["", "motd", "hostname", "tcp-port", "backlog", "udp-port"]
+        customConfigVariables = ["", "motd", "hostname", "tcp-port", "backlog", "udp-port", "isPersistent"]
         if os.path.exists(prcFile):
             # load the existing config file
             page = loadPrcFile(Filename.fromOsSpecific(prcFile))
@@ -59,6 +60,7 @@ class Config():
         page.makeDeclaration("tcp-port", str(self.TCPPORT))
         page.makeDeclaration("backlog", str(self.BACKLOG))
         page.makeDeclaration("udp-port", str(self.UDPPORT))
+        page.makeDeclaration("isPersistent", str(self.ISPERSISTENT))
 
         # create a stream to the specified config file
         configfile = OFileStream(prcFile)

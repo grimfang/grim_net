@@ -30,6 +30,7 @@ class Server(ShowBase):
 		self.config = Config()
 
 		# Set "global server vars"
+		self.isPersistent = False
 		self.core = None
 		self.gnframework = None
 		self.clients = {}
@@ -48,12 +49,15 @@ class Server(ShowBase):
 		if self.config.hasConfig:
 			print ("Config found : GOOD")
 			self.start(self.config.MOTD)
+			self.isPersistent = self.config.ISPERSISTENT
 		else:
 			print ("Something is wrong...")
 			print ("Running Make Config File ()...")
 			self.MakeConfigFile()
 
 			print ("Trying again...")
+			self.start(self.config.MOTD)
+			self.isPersistent = self.config.ISPERSISTENT
 
 	def MakeConfigFile(self):
 		self.config.WritePRCFile()

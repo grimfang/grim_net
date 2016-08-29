@@ -21,7 +21,8 @@ class Client():
 		self.game = _game
 		
 
-		self.core = None		
+		self.core = None
+		self.clientObject = None	
 
 		# Config
 		self.config = Config()

@@ -69,8 +69,11 @@ class TCP():
                 # Tell the reader about the new TCP connection
                 self.tcpReader.addConnection(newConnection)
 
-                # Save the connection for now...
-                self.core.createPlayerObject(generateUUID(),newConnection, netAddress)
+                # Handle the connection depending on persistent or not
+                if self.core.server.isPersistent:
+                    self.core.handleConnection(generateUUID(), newConnection, netAddress)
+                else:
+                    self.core.createPlayerObject(generateUUID(),newConnection, netAddress)
                     
                 print ("Server: New Connection from -", str(netAddress.getIpString()))
             else:

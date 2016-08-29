@@ -58,8 +58,7 @@ class TCP():
                 break
             else:
                 # Handle it
-                #self.packetManager.handlePacket(opcode, data)
-                print ("Something")
+                self.core.packetManager.handlePacket(opcode, data)
 
         return Task.cont
 

@@ -12,11 +12,7 @@
 
 class ClientObject():
 
-	def __init__(self, _uuid, _connection, _address):
+	def __init__(self, _uuid):
 
 		self.id = _uuid
-		self.connection = _connection
-		self.address = _address
 		self.state = 0 #0-first connected, 1-registered, 2-lobby, 3-game
-
-		
