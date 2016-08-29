@@ -55,7 +55,7 @@ class Client():
 
 
 		# Temp testing
-		self.core.connect(_host, _port)
+		#self.core.connect(_host, _port)
 
 	def stop(self):
 		pass

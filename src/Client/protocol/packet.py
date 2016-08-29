@@ -9,7 +9,7 @@ from panda3d.core import Datagram
 from panda3d.core import DatagramIterator
 
 
-from Server.protocol.opcodes import *
+from Client.protocol.opcodes import *
 
 
 ########################################################################
@@ -18,19 +18,20 @@ from Server.protocol.opcodes import *
 class Packet():
 
     def __init__(self, _packetManager):
+        self.packetManager = _packetManager
 
-    	self.packetManager = _packetManager
-
+    # Register Packet #
     def writeRegisterPacket(self, _data):
-    	# Build a packet
-    	pkt = Datagram()
+        # Build a packet
+        pkt = Datagram()
 
-    	# Type of packet
-    	pkt.addUint8(MSG_REGISTER)
+        # Type of packet
+        pkt.addUint8(MSG_REGISTER)
+        pkt.addString(str(_data))
+        return pkt
 
-    	pkt.addString(str(_data))
+    def readRegisterPacket(self, _pkt):
+        uuid = _pkt.getString()
+        return uuid
 
-    	return pkt
-
-    def readPacket(self, _pkt):
-    	pass
+    # 

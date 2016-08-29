@@ -16,3 +16,5 @@ class ClientObject():
 
 		self.id = _uuid
 		self.state = 0 #0-first connected, 1-registered, 2-lobby, 3-game
+
+		print (self.id)
